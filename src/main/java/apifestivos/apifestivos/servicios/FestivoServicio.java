@@ -1,19 +1,11 @@
 package apifestivos.apifestivos.servicios;
 
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-// import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-// import com.fasterxml.jackson.annotation.JsonFormat;
-
 import apifestivos.apifestivos.entidades.Festivo;
 import apifestivos.apifestivos.interfaces.IFestivoRepositorio;
 import apifestivos.apifestivos.interfaces.IFestivoServicio;
@@ -116,19 +108,13 @@ public class FestivoServicio implements IFestivoServicio {
 
     public List<Festivo> obtenerFestivos(Integer año) {
         List<Festivo> festivos = repositorio.findAll();
-
-        System.out.println("primeros Festivos: " + festivos);
         festivos = calcularFestivos(festivos, año);
-        System.out.println("Festivos: " + festivos);
         List<Festivo> fechas = new ArrayList<Festivo>();
-        System.out.println("fechas: " + festivos);
 
         for (final Festivo festivo : festivos) {
-            System.out.println("festivo.geFecha()" + festivo.getFecha() + "festivo.getNombre()" + festivo.getNombre());
             fechas.add(new Festivo(festivo.getFecha(), festivo.getNombre(), festivo.getTipo()));
-            System.out.println("fechas gaticos " + fechas);
         }
-        System.out.println("fechas después de for: " + fechas);
+
         return fechas;
     }
 
@@ -138,11 +124,8 @@ public class FestivoServicio implements IFestivoServicio {
 
     private boolean esFestivo(List<Festivo> festivos, Date fecha) {
         if (festivos != null) {
-            // if (festivos.get(0).getFecha() != null && fecha.getYear() !=
-            // festivos.get(0).getFecha().getYear())
-            festivos = calcularFestivos(festivos, fecha.getYear() + 1900);
 
-            // System.out.println(fecha.getYear());
+            festivos = calcularFestivos(festivos, fecha.getYear() + 1900);
 
             for (final Festivo festivo : festivos) {
                 Calendar c = Calendar.getInstance();
@@ -158,18 +141,6 @@ public class FestivoServicio implements IFestivoServicio {
     public boolean esFestivo(Date fecha) {
         List<Festivo> festivos = repositorio.findAll();
         return esFestivo(festivos, fecha);
-    }
-
-    @Override
-    public boolean esFechaCorrecta(String Fecha) {
-        try {
-            DateFormat dateFormatter = new SimpleDateFormat("yyyy/MM/dd");
-            dateFormatter.setLenient(false);
-            dateFormatter.parse(Fecha);
-            return true;
-        } catch (ParseException parsingException) {
-            return false;
-        }
     }
 
 }

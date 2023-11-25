@@ -9,6 +9,4 @@ public interface IFestivoServicio {
 
     public boolean esFestivo(Date Fecha);
 
-    public boolean esFechaCorrecta(String Fecha);
-
 }
