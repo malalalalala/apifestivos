@@ -29,13 +29,6 @@ public class FestivoControlador {
     @Autowired
     private IFestivoServicio festivoServicio;
 
-    // @JsonView(Vista.SimplifiedView.class)
-    // @GetMapping("listar/{año}")
-    // public List<Festivo> listar(@PathVariable Integer año) {
-
-    // return festivoServicio.obtenerFestivos(año);
-    // }
-
     @JsonView(Vista.SimplifiedView.class)
     @GetMapping("listar/{año}")
     public ResponseEntity<List<Festivo>> listar(@PathVariable String año) {
@@ -92,7 +85,6 @@ public class FestivoControlador {
     }
 
     private boolean esAnioValido(int year) {
-
         return year >= 0;
     }
 

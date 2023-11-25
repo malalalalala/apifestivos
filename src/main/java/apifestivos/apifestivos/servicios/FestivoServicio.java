@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import apifestivos.apifestivos.entidades.Festivo;
-import apifestivos.apifestivos.interfaces.IFestivoRepositorio;
 import apifestivos.apifestivos.interfaces.IFestivoServicio;
+import apifestivos.apifestivos.repositorios.IFestivoRepositorio;
 
 @Service
 public class FestivoServicio implements IFestivoServicio {
