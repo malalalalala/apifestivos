@@ -27,9 +27,11 @@ Before running the API, make sure you have the following installed:
 
 ### Installation
 
-1. Clone the repository:
+  Clone the repository:
 
-   ```[git clone https://github.com/malalalalala/apifestivos.git]
+   ```
+   [git clone https://github.com/malalalalala/apifestivos.git]
+   ```
 
 ## Usage
 
