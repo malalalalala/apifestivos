@@ -1,0 +1,77 @@
+# API Validar Festivos
+
+The **API Validar Festivos** is a RESTful API that provides information about holidays. It offers endpoints to retrieve a list of holidays and to verify if a specific date is a holiday.
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [List Holidays](#list-holidays)
+  - [Verify Holiday](#verify-holiday)
+- [Endpoints](#endpoints)
+- [Response Formats](#response-formats)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Getting Started
+
+### Prerequisites
+
+Before running the API, make sure you have the following installed:
+
+- Java (version X.X.X)
+- Maven (version X.X.X)
+- Your preferred IDE (e.g., IntelliJ, Eclipse)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+
+## Usage
+
+The API will be accessible at http://localhost:8081.
+
+### List Holidays
+
+**Endpoint:** `GET /festivos/listar/{year}`
+
+Retrieve a list of holidays for a specific year.
+
+**Example:**
+```bash
+curl http://localhost:8081/festivos/listar/2023
+
+## Verify Holiday
+
+**Endpoint:** `GET /festivos/verificar/{year}/{month}/{day}`
+
+Verify if a specific date is a holiday.
+
+**Example:**
+
+```bash
+curl http://localhost:8081/festivos/verificar/2023/11/25
+
+
+Certainly! Here is the provided information formatted in Markdown:
+
+markdown
+Copy code
+## Verify Holiday
+
+**Endpoint:** `GET /festivos/verificar/{year}/{month}/{day}`
+
+Verify if a specific date is a holiday.
+
+**Example:**
+
+```bash
+curl http://localhost:8081/festivos/verificar/2023/11/25
+
+## Endpoints
+GET /festivos/listar/{year} - List holidays for a specific year.
+GET /festivos/verificar/{year}/{month}/{day} - Verify if a date is a holiday.
