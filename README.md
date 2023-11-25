@@ -42,8 +42,9 @@ The API will be accessible at http://localhost:8081.
 Retrieve a list of holidays for a specific year.
 
 **Example:**
-```bash
+```
 curl http://localhost:8081/festivos/listar/2023
+```
 
 ## Verify Holiday
 
@@ -53,25 +54,34 @@ Verify if a specific date is a holiday.
 
 **Example:**
 
-```bash
+```
 curl http://localhost:8081/festivos/verificar/2023/11/25
+```
 
-
-Certainly! Here is the provided information formatted in Markdown:
-
-markdown
-Copy code
 ## Verify Holiday
 
 **Endpoint:** `GET /festivos/verificar/{year}/{month}/{day}`
 
 Verify if a specific date is a holiday.
 
-**Example:**
-
-```bash
+```
 curl http://localhost:8081/festivos/verificar/2023/11/25
+```
 
 ## Endpoints
 GET /festivos/listar/{year} - List holidays for a specific year.
 GET /festivos/verificar/{year}/{month}/{day} - Verify if a date is a holiday.
+
+## Response Formats
+The API returns JSON-formatted responses.
+
+**Example:**
+
+```
+{
+  "nombre": "Navidad",
+  "fecha": 1987/12/25"
+}
+```
+
+```
