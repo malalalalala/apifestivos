@@ -30,7 +30,7 @@ Before running the API, make sure you have the following installed:
   Clone the repository:
 
    ```
-   [git clone https://github.com/malalalalala/apifestivos.git]
+   git clone https://github.com/malalalalala/apifestivos.git
    ```
 
 ## Usage
