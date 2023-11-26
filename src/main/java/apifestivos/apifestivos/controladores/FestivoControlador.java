@@ -30,49 +30,32 @@ public class FestivoControlador {
     @Autowired
     private IFestivoServicio festivoServicio;
 
+    // la validación de que sea una fecha válida se hizo en el front
     @CrossOrigin(origins = "*")
     @GetMapping("verificar/{year}/{month}/{day}")
-    public ResponseEntity<String> verificarFestivo(
+    public String verificarFestivo(
             @PathVariable Integer year,
-            @PathVariable String month,
-            @PathVariable String day) {
+            @PathVariable Integer month,
+            @PathVariable Integer day) {
 
         try {
-            int parsedMonth = Integer.parseInt(month);
-            int parsedDay = Integer.parseInt(day);
+            String fecha = String.format("%04d/%02d/%02d", year, month, day);
 
-            if (esFechaValida(year, parsedMonth, parsedDay)) {
-                String fecha = String.format("%04d/%02d/%02d", year, parsedMonth, parsedDay);
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
+            Date fechaParseada = formatoFecha.parse(fecha);
+            return festivoServicio.esFestivo(fechaParseada) ? "Es festivo." : "No es festivo.";
 
-                SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
-                Date fechaParseada = formatoFecha.parse(fecha);
-
-                System.out.println(fechaParseada);
-                return festivoServicio.esFestivo(fechaParseada) ? ResponseEntity.ok("Es festivo.")
-                        : ResponseEntity.ok("No es festivo.");
-            }
-
-            return ResponseEntity.badRequest().body("Fecha no válida.");
         } catch (NumberFormatException | ParseException e) {
-            return ResponseEntity.badRequest()
-                    .body("Solicitud inválida. Por favor, revise el formato. Debe seguir el patrón yyyy/MM/dd.");
-        }
-    }
-
-    private boolean esFechaValida(int year, int month, int day) {
-        try {
-            LocalDate.of(year, month, day);
-            return true;
-        } catch (DateTimeException e) {
-            return false;
+            return "Solicitud inválida. Por favor, revise el formato. Debe seguir el patrón yyyy/MM/dd.";
         }
     }
 
     @CrossOrigin(origins = "*")
     @JsonView(Vista.SimplifiedView.class)
-    @GetMapping("listar/{año}")
-    public List<Festivo> listar(@PathVariable String año) {
-        Integer year = Integer.parseInt(año);
+    @GetMapping("listar/{year}")
+
+    public List<Festivo> listar(@PathVariable Integer year) {
+
         return festivoServicio.obtenerFestivos(year);
     }
 
