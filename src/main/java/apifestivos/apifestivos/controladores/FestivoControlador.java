@@ -8,12 +8,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -29,29 +30,9 @@ public class FestivoControlador {
     @Autowired
     private IFestivoServicio festivoServicio;
 
-    @JsonView(Vista.SimplifiedView.class)
-    @GetMapping("listar/{año}")
-    public ResponseEntity<List<Festivo>> listar(@PathVariable String año) {
-        try {
-            // Intenta convertir la cadena de año a un Integer
-            Integer year = Integer.parseInt(año);
-
-            // Verifica si el año es válido
-            if (esAnioValido(year)) {
-                List<Festivo> festivos = festivoServicio.obtenerFestivos(year);
-                return ResponseEntity.ok(festivos);
-            } else {
-                return ResponseEntity.badRequest().body(null);
-            }
-        } catch (NumberFormatException e) {
-            // Captura la excepción si la conversión falla
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
-
+    @CrossOrigin(origins = "*")
     @GetMapping("verificar/{year}/{month}/{day}")
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String verificarFestivo(
+    public ResponseEntity<String> verificarFestivo(
             @PathVariable Integer year,
             @PathVariable String month,
             @PathVariable String day) {
@@ -64,14 +45,17 @@ public class FestivoControlador {
                 String fecha = String.format("%04d/%02d/%02d", year, parsedMonth, parsedDay);
 
                 SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
-                Date fechaVer = formatoFecha.parse(fecha);
+                Date fechaParseada = formatoFecha.parse(fecha);
 
-                return festivoServicio.esFestivo(fechaVer) ? "Es festivo." : "No es festivo.";
+                System.out.println(fechaParseada);
+                return festivoServicio.esFestivo(fechaParseada) ? ResponseEntity.ok("Es festivo.")
+                        : ResponseEntity.ok("No es festivo.");
             }
 
-            return "Fecha no válida.";
+            return ResponseEntity.badRequest().body("Fecha no válida.");
         } catch (NumberFormatException | ParseException e) {
-            return "Solicitud inválida. Por favor, revise el formato. Debe seguir el patrón yyyy/MM/dd.";
+            return ResponseEntity.badRequest()
+                    .body("Solicitud inválida. Por favor, revise el formato. Debe seguir el patrón yyyy/MM/dd.");
         }
     }
 
@@ -84,8 +68,12 @@ public class FestivoControlador {
         }
     }
 
-    private boolean esAnioValido(int year) {
-        return year >= 0;
+    @CrossOrigin(origins = "*")
+    @JsonView(Vista.SimplifiedView.class)
+    @GetMapping("listar/{año}")
+    public List<Festivo> listar(@PathVariable String año) {
+        Integer year = Integer.parseInt(año);
+        return festivoServicio.obtenerFestivos(year);
     }
 
 }
