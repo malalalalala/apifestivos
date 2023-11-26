@@ -69,5 +69,5 @@ The API returns JSON-formatted responses.
   "fecha": 1987/12/25"
 }
 ```
-
+Es festivo.
 ```
